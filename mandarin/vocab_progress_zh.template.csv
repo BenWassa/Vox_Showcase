@@ -1,0 +1,2 @@
+word_id,word,translation,seen,practiced_count,tested,correct_count,status,notes
+ZH001,例子 (lìzi),example,FALSE,0,FALSE,0,active,Sample entry
