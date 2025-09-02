@@ -1,0 +1,12 @@
+word_id,word,translation,seen,practiced_count,tested,correct_count,status,notes
+ZH001,例子 (lìzi),example,FALSE,0,FALSE,0,active,Sample entry
+ZH002,你好 (nǐ hǎo),hello,FALSE,0,FALSE,0,active,
+ZH003,谢谢 (xièxiè),thank you,FALSE,0,FALSE,0,active,
+ZH004,请 (qǐng),please,FALSE,0,FALSE,0,active,
+ZH005,再见 (zàijiàn),goodbye,FALSE,0,FALSE,0,active,
+ZH006,是 (shì),is/am/are,FALSE,0,FALSE,0,active,
+ZH007,不是 (bù shì),is not,FALSE,0,FALSE,0,active,
+ZH008,有 (yǒu),have/has,FALSE,0,FALSE,0,active,
+ZH009,没有 (méiyǒu),do not have,FALSE,0,FALSE,0,active,
+ZH010,可以 (kěyǐ),can/may,FALSE,0,FALSE,0,active,
+ZH011,喜欢 (xǐhuan),like,FALSE,0,FALSE,0,active,

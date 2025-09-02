@@ -1,0 +1,12 @@
+word_id,word,translation,seen,practiced_count,tested,correct_count,status,notes
+ES001,ejemplo,example,FALSE,0,FALSE,0,active,Sample entry
+ES002,hola,hello,FALSE,0,FALSE,0,active,
+ES003,gracias,thank you,FALSE,0,FALSE,0,active,
+ES004,por favor,please,FALSE,0,FALSE,0,active,
+ES005,adiós,goodbye,FALSE,0,FALSE,0,active,
+ES006,es,is/am/are,FALSE,0,FALSE,0,active,
+ES007,no es,is not,FALSE,0,FALSE,0,active,
+ES008,tiene,have/has,FALSE,0,FALSE,0,active,
+ES009,no tiene,do not have,FALSE,0,FALSE,0,active,
+ES010,puede,can/may,FALSE,0,FALSE,0,active,
+ES011,gusta,like,FALSE,0,FALSE,0,active,
