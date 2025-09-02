@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Vox Mobile - Vocab Tracker</title>
+    <!-- Link to Google Fonts for 'Inter' -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Mobile-specific styles -->
+    <style>
+        /* Mobile-First CSS Variables */
+        :root {
+            --primary-color: #3b82f6;
+            --primary-dark: #2563eb;
+            --secondary-color: #10b981;
+            --secondary-dark: #059669;
+            --accent-color: #f97316;
+            --accent-dark: #ea580c;
+            --tertiary-color: #ef4444;
+            --tertiary-dark: #dc2626;
+
+            --background-color: #f8fafc;
+            --surface-color: #ffffff;
+            --text-color-primary: #1f2937;
+            --text-color-secondary: #4b5563;
+            --border-color: #e5e7eb;
+
+            --shadow-light: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+            --shadow-medium: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-strong: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Reset and Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color-primary);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            padding: 0;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            background: var(--surface-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 16px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-light);
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 12px;
+            color: var(--text-color-primary);
+        }
+
+        /* Language Switcher */
+        .language-switch {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+
+        .flag-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 12px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--surface-color);
+            color: var(--text-color-secondary);
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex: 1;
+            justify-content: center;
+            max-width: 120px;
+        }
+
+        .flag-btn.selected {
+            border-color: var(--primary-color);
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .flag-img {
+            width: 20px;
+            height: 14px;
+            border-radius: 2px;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .control-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .control-btn {
+            flex: 1;
+            padding: 10px 12px;
+            border: none;
+            border-radius: 8px;
+            background: var(--primary-color);
+            color: white;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            min-height: 44px; /* Touch-friendly */
+        }
+
+        .control-btn:active {
+            background: var(--primary-dark);
+        }
+
+        .control-btn.export-btn {
+            background: var(--accent-color);
+        }
+
+        .control-btn.export-btn:active {
+            background: var(--accent-dark);
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            flex: 1;
+        }
+
+        .file-input-wrapper input[type="file"] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            background: var(--surface-color);
+            color: var(--text-color-primary);
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        /* Message */
+        .message {
+            margin: 16px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            display: none;
+        }
+
+        .message.active {
+            display: block;
+        }
+
+        .message.success {
+            background: #d1fae5;
+            color: #047857;
+            border: 1px solid #a7f3d0;
+        }
+
+        .message.error {
+            background: #fee2e2;
+            color: #dc2626;
+            border: 1px solid #fca5a5;
+        }
+
+        .message.info {
+            background: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #93c5fd;
+        }
+
+        /* Card-based Layout for Mobile */
+        .content {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+        }
+
+        .vocab-card {
+            background: var(--surface-color);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: var(--shadow-light);
+            border: 1px solid var(--border-color);
+        }
+
+        .vocab-card.retired {
+            opacity: 0.6;
+            background: #f9fafb;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            gap: 12px;
+        }
+
+        .word-section {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .word {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-color-primary);
+            margin-bottom: 4px;
+            word-break: break-word;
+        }
+
+        .translation {
+            font-size: 1rem;
+            color: var(--text-color-secondary);
+            font-style: italic;
+            word-break: break-word;
+            padding: 8px;
+            border: 1px solid transparent;
+            border-radius: 6px;
+            cursor: text;
+            transition: all 0.2s ease;
+            min-height: 36px;
+            display: flex;
+            align-items: center;
+        }
+
+        .translation:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: #f0f9ff;
+            font-style: normal;
+        }
+
+        .word-id {
+            font-size: 0.75rem;
+            color: var(--text-color-secondary);
+            background: var(--background-color);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .card-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 12px 0;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .control-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-color-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .custom-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--primary-color);
+            border-radius: 4px;
+            appearance: none;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .custom-checkbox:checked {
+            background: var(--primary-color);
+        }
+
+        .custom-checkbox:checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .counter-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .counter-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            border-radius: 6px;
+            background: var(--primary-color);
+            color: white;
+            font-size: 1.125rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s ease;
+        }
+
+        .counter-btn:active {
+            background: var(--primary-dark);
+        }
+
+        .counter-btn:disabled {
+            background: var(--border-color);
+            cursor: not-allowed;
+        }
+
+        .count-value {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-color-primary);
+            min-width: 24px;
+            text-align: center;
+        }
+
+        .select-wrapper {
+            position: relative;
+        }
+
+        .status-select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background: var(--surface-color);
+            color: var(--text-color-primary);
+            font-size: 0.875rem;
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 8px center;
+            background-repeat: no-repeat;
+            background-size: 16px;
+            padding-right: 32px;
+        }
+
+        .status-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        /* Status-specific colors */
+        .t-status-untested {
+            background: #f3f4f6;
+        }
+
+        .t-status-passed {
+            background: #d1fae5;
+            color: #047857;
+        }
+
+        .t-status-failed {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .notes {
+            margin-top: 12px;
+            padding: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background: var(--surface-color);
+            color: var(--text-color-primary);
+            font-size: 0.875rem;
+            min-height: 40px;
+            cursor: text;
+            transition: border-color 0.2s ease;
+        }
+
+        .notes:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .notes:empty:before {
+            content: 'Add notes...';
+            color: var(--text-color-secondary);
+            font-style: italic;
+        }
+
+        /* Loading and Empty States */
+        .empty-state {
+            text-align: center;
+            padding: 48px 24px;
+            color: var(--text-color-secondary);
+        }
+
+        .empty-state h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            font-size: 0.875rem;
+        }
+
+        /* Icons */
+        .icon {
+            width: 16px;
+            height: 16px;
+            stroke-width: 2;
+        }
+
+        /* Safe Area Handling for iOS */
+        @supports (padding: max(0px)) {
+            .header {
+                padding-top: max(16px, env(safe-area-inset-top));
+                padding-left: max(16px, env(safe-area-inset-left));
+                padding-right: max(16px, env(safe-area-inset-right));
+            }
+
+            .content {
+                padding-left: max(16px, env(safe-area-inset-left));
+                padding-right: max(16px, env(safe-area-inset-right));
+                padding-bottom: max(16px, env(safe-area-inset-bottom));
+            }
+        }
+
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --background-color: #111827;
+                --surface-color: #1f2937;
+                --text-color-primary: #f9fafb;
+                --text-color-secondary: #d1d5db;
+                --border-color: #374151;
+            }
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 16px;
+            background: var(--surface-color);
+            border-top: 1px solid var(--border-color);
+            font-size: 0.875rem;
+            color: var(--text-color-secondary);
+        }
+
+        .footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Vox Mobile</h1>
+        
+        <!-- Language Selection -->
+        <div class="language-switch">
+            <button id="spanishBtn" class="flag-btn selected">
+                <img src="images/Spain_flag.png" alt="Spain Flag" class="flag-img">
+                <span>Spanish</span>
+            </button>
+            <button id="mandarinBtn" class="flag-btn">
+                <img src="images/China_flag.png" alt="China Flag" class="flag-img">
+                <span>Mandarin</span>
+            </button>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <input type="text" id="searchBox" class="search-box" placeholder="Search words, translations, notes...">
+            
+            <div class="control-row">
+                <div class="file-input-wrapper">
+                    <button class="control-btn">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.2 15V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h14l2-2 2-2zM10 12l2-2 2 2M12 18V10"/></svg>
+                        Upload
+                    </button>
+                    <input type="file" id="csvFile" accept=".csv">
+                </div>
+                
+                <button id="exportCsvBtn" class="control-btn export-btn">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                    Export
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="message" class="message active info">No CSV loaded. Selecting Spanish by default.</div>
+
+    <div class="content" id="content">
+        <!-- Vocabulary cards will be rendered here -->
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2025 Project Vox Mobile. Optimized for touch.</p>
+        <p><a href="index.html?desktop=true">Switch to Desktop Version</a></p>
+    </div>
+
+    <script>
+        const csvFile = document.getElementById('csvFile');
+        const searchBox = document.getElementById('searchBox');
+        const content = document.getElementById('content');
+        const messageDiv = document.getElementById('message');
+        const exportCsvBtn = document.getElementById('exportCsvBtn');
+        const spanishBtn = document.getElementById('spanishBtn');
+        const mandarinBtn = document.getElementById('mandarinBtn');
+
+        const csvPaths = {
+            spanish: 'data/vocab_progress_es.csv',
+            mandarin: 'data/vocab_progress_zh.csv'
+        };
+        
+        let vocabData = [];
+        let currentLanguage = 'spanish';
+
+        // Utility Functions
+        function showMessage(msg, type = 'info') {
+            messageDiv.textContent = msg;
+            messageDiv.className = 'message active';
+            messageDiv.classList.add(type);
+            clearTimeout(messageDiv.dataset.timer);
+            messageDiv.dataset.timer = setTimeout(() => {
+                messageDiv.classList.remove('active');
+            }, 5000);
+        }
+
+        // CSV Parser (same as desktop version)
+        function parseCSV(text) {
+            const lines = text.trim().split(/\r?\n/);
+            if (lines.length === 0) throw new Error("Empty CSV file.");
+
+            const parseLine = (line) => {
+                const values = [];
+                let inQuote = false;
+                let currentVal = '';
+                for (let i = 0; i < line.length; i++) {
+                    const char = line[i];
+                    if (char === '"' && (i === 0 || line[i-1] === ',' || inQuote)) {
+                        inQuote = !inQuote;
+                        if (!inQuote && line[i+1] === '"') {
+                            currentVal += '"';
+                            i++;
+                        }
+                    } else if (char === ',' && !inQuote) {
+                        values.push(currentVal.trim());
+                        currentVal = '';
+                    } else {
+                        currentVal += char;
+                    }
+                }
+                values.push(currentVal.trim());
+                return values;
+            };
+
+            const headers = parseLine(lines[0]);
+            const legacyHeaders = ['word_id', 'word', 'seen', 'practiced_count', 'tested', 'correct_count', 'status', 'notes'];
+            const legacyWithTranslation = ['word_id', 'word', 'translation', 'seen', 'practiced_count', 'tested', 'correct_count', 'status', 'notes'];
+            const newHeaders = ['word_id', 'word', 'translation', 'seen', 'practiced_count', 'tested_status', 'status', 'notes'];
+            const isLegacy = legacyHeaders.every(h => headers.includes(h));
+            const isLegacyWithTranslation = legacyWithTranslation.every(h => headers.includes(h));
+            const isNew = newHeaders.every(h => headers.includes(h));
+            
+            if (!isLegacy && !isLegacyWithTranslation && !isNew) {
+                throw new Error(`CSV headers do not match expected schema. Expected either: ${legacyHeaders.join(', ')} or ${legacyWithTranslation.join(', ')} or ${newHeaders.join(', ')}`);
+            }
+
+            return lines.slice(1).map(line => {
+                const values = parseLine(line);
+                let row = {};
+                headers.forEach((header, i) => {
+                    let value = values[i];
+                    if (value === undefined) value = '';
+                    if (header === 'seen') {
+                        row.seen = String(value).toUpperCase() === 'TRUE';
+                    } else if (header === 'tested') {
+                        row.tested = String(value).toUpperCase() === 'TRUE';
+                    } else if (header === 'correct_count') {
+                        row.correct_count = parseInt(value, 10) || 0;
+                    } else if (header === 'practiced_count') {
+                        row.practiced_count = parseInt(value, 10) || 0;
+                    } else if (header === 'tested_status') {
+                        const n = parseInt(value, 10);
+                        row.tested_status = [0,1,2].includes(n) ? n : 0;
+                    } else if (header === 'word_id' || header === 'word' || header === 'translation' || header === 'status' || header === 'notes') {
+                        row[header] = value;
+                    }
+                });
+                
+                if (row.tested_status === undefined) {
+                    if (row.tested === true && (row.correct_count || 0) > 0) row.tested_status = 1;
+                    else if (row.tested === true) row.tested_status = 2;
+                    else row.tested_status = 0;
+                }
+                return row;
+            });
+        }
+
+        function toCSV(data) {
+            if (data.length === 0) return '';
+            const headers = ['word_id','word','translation','seen','practiced_count','tested_status','status','notes'].join(',');
+            const rows = data.map(row => {
+                const ordered = {
+                    word_id: row.word_id,
+                    word: row.word,
+                    translation: row.translation || '',
+                    seen: !!row.seen,
+                    practiced_count: Number(row.practiced_count) || 0,
+                    tested_status: Number(row.tested_status) || 0,
+                    status: row.status || 'active',
+                    notes: row.notes || ''
+                };
+                return Object.values(ordered).map(value => {
+                    if (typeof value === 'boolean') {
+                        return value ? 'TRUE' : 'FALSE';
+                    }
+                    if (typeof value === 'string' && (value.includes(',') || value.includes('"'))) {
+                        return `"${value.replace(/"/g, '""')}"`;
+                    }
+                    return value;
+                }).join(',');
+            });
+            return [headers, ...rows].join('\n');
+        }
+
+        // Mobile Card Rendering
+        function renderCards() {
+            const filterText = searchBox.value.toLowerCase();
+            let filteredData = vocabData.filter(row => {
+                if (!filterText) return true;
+                return Object.values(row).some(value => String(value).toLowerCase().includes(filterText));
+            });
+
+            if (filteredData.length === 0) {
+                content.innerHTML = `
+                    <div class="empty-state">
+                        <h3>No words found</h3>
+                        <p>Try adjusting your search or load a CSV file</p>
+                    </div>
+                `;
+                return;
+            }
+
+            content.innerHTML = filteredData.map(row => `
+                <div class="vocab-card ${row.status === 'retired' ? 'retired' : ''}" data-word-id="${row.word_id}">
+                    <div class="card-header">
+                        <div class="word-section">
+                            <div class="word">${row.word}</div>
+                            <div class="translation" contenteditable="true" data-field="translation">${row.translation || ''}</div>
+                        </div>
+                        <div class="word-id">#${row.word_id}</div>
+                    </div>
+                    
+                    <div class="card-controls">
+                        <div class="control-group">
+                            <div class="control-label">Seen</div>
+                            <div class="checkbox-wrapper">
+                                <input type="checkbox" class="custom-checkbox" ${row.seen ? 'checked' : ''} data-field="seen">
+                                <span>Mark as seen</span>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <div class="control-label">Practiced</div>
+                            <div class="counter-control">
+                                <button class="counter-btn" data-action="decrease" ${row.practiced_count <= 0 ? 'disabled' : ''}>−</button>
+                                <span class="count-value">${row.practiced_count}</span>
+                                <button class="counter-btn" data-action="increase">+</button>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <div class="control-label">Test Status</div>
+                            <div class="select-wrapper">
+                                <select class="status-select t-status-${['untested','passed','failed'][row.tested_status] || 'untested'}" data-field="tested_status">
+                                    <option value="0" ${row.tested_status === 0 ? 'selected' : ''}>Untested</option>
+                                    <option value="1" ${row.tested_status === 1 ? 'selected' : ''}>Passed</option>
+                                    <option value="2" ${row.tested_status === 2 ? 'selected' : ''}>Failed</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <div class="control-label">Status</div>
+                            <div class="select-wrapper">
+                                <select class="status-select" data-field="status">
+                                    <option value="active" ${row.status === 'active' ? 'selected' : ''}>Active</option>
+                                    <option value="retired" ${row.status === 'retired' ? 'selected' : ''}>Retired</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="notes" contenteditable="true" data-field="notes">${row.notes || ''}</div>
+                </div>
+            `).join('');
+
+            // Add event listeners to the rendered cards
+            attachCardEventListeners();
+        }
+
+        function attachCardEventListeners() {
+            content.addEventListener('change', (e) => {
+                const card = e.target.closest('.vocab-card');
+                if (!card) return;
+                
+                const wordId = card.dataset.wordId;
+                const row = vocabData.find(r => r.word_id === wordId);
+                if (!row) return;
+
+                const field = e.target.dataset.field;
+                
+                if (field === 'seen') {
+                    row.seen = e.target.checked;
+                } else if (field === 'tested_status') {
+                    row.tested_status = parseInt(e.target.value);
+                    e.target.className = `status-select t-status-${['untested','passed','failed'][row.tested_status]}`;
+                } else if (field === 'status') {
+                    row.status = e.target.value;
+                    card.className = `vocab-card ${row.status === 'retired' ? 'retired' : ''}`;
+                }
+            });
+
+            content.addEventListener('click', (e) => {
+                if (e.target.classList.contains('counter-btn')) {
+                    const card = e.target.closest('.vocab-card');
+                    const wordId = card.dataset.wordId;
+                    const row = vocabData.find(r => r.word_id === wordId);
+                    if (!row) return;
+
+                    const action = e.target.dataset.action;
+                    if (action === 'increase') {
+                        row.practiced_count++;
+                    } else if (action === 'decrease' && row.practiced_count > 0) {
+                        row.practiced_count--;
+                    }
+                    
+                    renderCards();
+                }
+            });
+
+            content.addEventListener('blur', (e) => {
+                if (e.target.contentEditable === 'true') {
+                    const card = e.target.closest('.vocab-card');
+                    if (!card) return;
+                    
+                    const wordId = card.dataset.wordId;
+                    const row = vocabData.find(r => r.word_id === wordId);
+                    if (!row) return;
+
+                    const field = e.target.dataset.field;
+                    if (field) {
+                        row[field] = e.target.textContent.trim();
+                    }
+                }
+            }, true);
+        }
+
+        // Event Listeners
+        csvFile.addEventListener('change', async (event) => {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            try {
+                const text = await file.text();
+                vocabData = parseCSV(text);
+                renderCards();
+                showMessage(`CSV loaded successfully! Found ${vocabData.length} words.`, 'success');
+                spanishBtn.classList.remove('selected');
+                mandarinBtn.classList.remove('selected');
+            } catch (error) {
+                console.error("Error loading CSV:", error);
+                showMessage(`Error loading CSV: ${error.message}`, 'error');
+                vocabData = [];
+                renderCards();
+            }
+        });
+
+        searchBox.addEventListener('input', renderCards);
+
+        exportCsvBtn.addEventListener('click', () => {
+            if (vocabData.length === 0) {
+                showMessage('No data to export. Please load a CSV first.', 'error');
+                return;
+            }
+            const csvContent = toCSV(vocabData);
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            const filename = `vocab_progress_${currentLanguage}_${new Date().toISOString().slice(0,10).replace(/-/g,'')}.csv`;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showMessage('CSV exported successfully!', 'success');
+        });
+
+        // Language Switching
+        async function switchLanguage(lang) {
+            currentLanguage = lang;
+            spanishBtn.classList.remove('selected');
+            mandarinBtn.classList.remove('selected');
+            document.getElementById(`${lang}Btn`).classList.add('selected');
+            csvFile.value = '';
+            await loadVocabFromPath(csvPaths[lang]);
+        }
+
+        async function loadVocabFromPath(path) {
+            try {
+                const response = await fetch(path);
+                if (!response.ok) {
+                    throw new Error(`Could not load CSV from '${path}'. Please ensure the file exists or use the Upload button.`);
+                }
+                const text = await response.text();
+                vocabData = parseCSV(text);
+                renderCards();
+                showMessage(`Loaded ${currentLanguage.charAt(0).toUpperCase() + currentLanguage.slice(1)} vocab! Found ${vocabData.length} words.`, 'success');
+            } catch (error) {
+                console.error("Auto-load error:", error);
+                showMessage(`Auto-load failed: ${error.message}`, 'error');
+                vocabData = [];
+                renderCards();
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            switchLanguage('spanish');
+            spanishBtn.addEventListener('click', () => switchLanguage('spanish'));
+            mandarinBtn.addEventListener('click', () => switchLanguage('mandarin'));
+        });
+    </script>
+</body>
+</html>

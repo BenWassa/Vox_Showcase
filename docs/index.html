@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Vox: Vocab Tracker</title>
+    <!-- Mobile Detection and Redirect -->
+    <script>
+        // Check if user is on mobile and redirect to mobile version
+        function isMobileDevice() {
+            return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1) || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+        
+        // Only redirect if not explicitly staying on desktop version
+        if (isMobileDevice() && !window.location.search.includes('desktop=true')) {
+            window.location.href = 'mobile.html' + window.location.search;
+        }
+    </script>
+    <!-- Link to Google Fonts for 'Inter' -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Link to your external stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>Project Vox: Vocab Tracker</h1>
+
+    <!-- Language Selection Buttons -->
+    <div id="language-switch">
+        <button id="spanishBtn" class="flag-btn flag-btn-es selected">
+            <img src="images/Spain_flag.png" alt="Spain Flag" class="flag-img">
+            <span>Spanish</span>
+        </button>
+        <button id="mandarinBtn" class="flag-btn flag-btn-cn">
+            <img src="images/China_flag.png" alt="China Flag" class="flag-img">
+            <span>Mandarin</span>
+        </button>
+    </div>
+
+    <div class="controls">
+        <div class="control-group file-actions">
+            <div class="file-upload">
+                <label for="csvFile" class="file-label">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.2 15V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h14l2-2 2-2zM10 12l2-2 2 2M12 18V10"/></svg>
+                    Upload CSV
+                </label>
+                <input type="file" id="csvFile" accept=".csv">
+            </div>
+            <button id="exportCsvBtn" class="control-btn export-btn">
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                Export
+            </button>
+        </div>
+
+        <div class="control-group search-action">
+            <label for="searchBox">
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                Search:
+            </label>
+            <input type="text" id="searchBox" placeholder="Filter words, notes, status...">
+        </div>
+    </div>
+
+    <div id="message" class="active info">No CSV loaded. Selecting Spanish by default.</div>
+
+    <div class="table-container">
+        <table id="vocabTable">
+            <colgroup>
+                <col style="width:40px;">  <!-- Select checkbox -->
+                <col style="width:110px;"> <!-- Word ID -->
+                <col style="width:200px;"> <!-- Word -->
+                <col style="width:200px;"> <!-- Translation -->
+                <col style="width:80px;">  <!-- Seen -->
+                <col style="width:150px;"> <!-- Practiced Count -->
+                <col style="width:160px;"> <!-- Tested Status -->
+                <col style="width:180px;"> <!-- Status -->
+                <col>                      <!-- Notes (flexible) -->
+            </colgroup>
+            <thead>
+                <tr>
+                    <th data-column="select"><input type="checkbox" id="selectAll"></th>
+                    <th data-column="word_id">Word ID</th>
+                    <th data-column="word">Word</th>
+                        <th data-column="translation">Translation</th> <!-- Added Translation header -->
+                    <th data-column="seen">Seen</th>
+                    <th data-column="practiced_count">Practiced Count</th>
+                    <th data-column="tested_status">Tested Status</th>
+                    <th data-column="status">Status</th>
+                    <th data-column="notes">Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Vocabulary data will be rendered here -->
+            </tbody>
+        </table>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Project Vox. Crafted for focused language acquisition.</p>
+        <p><a href="mobile.html" style="color: var(--primary-color); text-decoration: none;">Switch to Mobile Version</a></p>
+    </footer>
+
+    <script>
+        const csvFile = document.getElementById('csvFile');
+        const searchBox = document.getElementById('searchBox');
+        const vocabTable = document.getElementById('vocabTable');
+        const tableBody = vocabTable.querySelector('tbody');
+        const tableHeaderRow = vocabTable.querySelector('thead tr');
+        const selectAllCheckbox = document.getElementById('selectAll');
+        const messageDiv = document.getElementById('message');
+
+        const exportCsvBtn = document.getElementById('exportCsvBtn');
+
+        const spanishBtn = document.getElementById('spanishBtn');
+        const mandarinBtn = document.getElementById('mandarinBtn');
+
+        const csvPaths = {
+            spanish: 'data/vocab_progress_es.csv',
+            mandarin: 'data/vocab_progress_zh.csv'
+        };
+        let vocabData = []; // Stores the parsed CSV data
+        let currentLanguage = 'spanish'; // Default language
+        let currentSortColumn = null;
+        let currentSortDirection = 'asc'; // 'asc' or 'desc'
+
+        // --- Utility Functions ---
+
+        function showMessage(msg, type = 'info') {
+            messageDiv.textContent = msg;
+            messageDiv.className = 'active'; // Always show
+            messageDiv.classList.add(type);
+            clearTimeout(messageDiv.dataset.timer); // Clear existing timer
+            messageDiv.dataset.timer = setTimeout(() => {
+                messageDiv.classList.remove('active');
+            }, 5000); // Hide after 5 seconds
+        }
+
+        // Robust CSV parser tailored to your schema
+        function parseCSV(text) {
+            const lines = text.trim().split(/\r?\n/);
+            if (lines.length === 0) throw new Error("Empty CSV file.");
+
+            // Basic CSV parsing that handles quoted fields
+            const parseLine = (line) => {
+                const values = [];
+                let inQuote = false;
+                let currentVal = '';
+                for (let i = 0; i < line.length; i++) {
+                    const char = line[i];
+                    if (char === '"' && (i === 0 || line[i-1] === ',' || inQuote)) {
+                        inQuote = !inQuote;
+                        // Handle escaped quotes (e.g., "" becomes ") inside a quoted field
+                        if (!inQuote && line[i+1] === '"') {
+                            currentVal += '"';
+                            i++; // Skip the next quote
+                        }
+                    } else if (char === ',' && !inQuote) {
+                        values.push(currentVal.trim());
+                        currentVal = '';
+                    } else {
+                        currentVal += char;
+                    }
+                }
+                values.push(currentVal.trim()); // Add the last value
+                return values;
+            };
+
+            const headers = parseLine(lines[0]);
+            // Support both legacy schema and new schema
+            const legacyHeaders = ['word_id', 'word', 'seen', 'practiced_count', 'tested', 'correct_count', 'status', 'notes'];
+            const legacyWithTranslation = ['word_id', 'word', 'translation', 'seen', 'practiced_count', 'tested', 'correct_count', 'status', 'notes'];
+            const newHeaders = ['word_id', 'word', 'translation', 'seen', 'practiced_count', 'tested_status', 'status', 'notes'];
+            const isLegacy = legacyHeaders.every(h => headers.includes(h));
+            const isLegacyWithTranslation = legacyWithTranslation.every(h => headers.includes(h));
+            const isNew = newHeaders.every(h => headers.includes(h));
+            if (!isLegacy && !isLegacyWithTranslation && !isNew) {
+                throw new Error(`CSV headers do not match expected schema. Expected either: ${legacyHeaders.join(', ')} or ${legacyWithTranslation.join(', ')} or ${newHeaders.join(', ')}`);
+            }
+
+            return lines.slice(1).map(line => {
+                const values = parseLine(line);
+                let row = {};
+                headers.forEach((header, i) => {
+                    let value = values[i];
+                    if (value === undefined) value = '';
+                    if (header === 'seen') {
+                        row.seen = String(value).toUpperCase() === 'TRUE';
+                    } else if (header === 'tested') {
+                        // legacy boolean tested
+                        row.tested = String(value).toUpperCase() === 'TRUE';
+                    } else if (header === 'correct_count') {
+                        row.correct_count = parseInt(value, 10) || 0; // legacy count
+                    } else if (header === 'practiced_count') {
+                        row.practiced_count = parseInt(value, 10) || 0;
+                    } else if (header === 'tested_status') {
+                        // new schema: 0=untested,1=passed,2=failed
+                        const n = parseInt(value, 10);
+                        row.tested_status = [0,1,2].includes(n) ? n : 0;
+                    } else if (header === 'word_id' || header === 'word' || header === 'translation' || header === 'status' || header === 'notes') {
+                        row[header] = value;
+                    }
+                });
+                // Normalize: ensure tested_status exists for rendering
+                if (row.tested_status === undefined) {
+                    // derive from legacy tested/correct_count
+                    if (row.tested === true && (row.correct_count || 0) > 0) row.tested_status = 1;
+                    else if (row.tested === true) row.tested_status = 2;
+                    else row.tested_status = 0;
+                }
+                return row;
+            });
+        }
+
+        // Convert data back to CSV string
+        function toCSV(data) {
+            if (data.length === 0) return '';
+            // Emit in new schema order regardless of input
+            const headers = ['word_id','word','translation','seen','practiced_count','tested_status','status','notes'].join(',');
+            const rows = data.map(row => {
+                const ordered = {
+                    word_id: row.word_id,
+                    word: row.word,
+                    translation: row.translation || '',
+                    seen: !!row.seen,
+                    practiced_count: Number(row.practiced_count) || 0,
+                    tested_status: Number(row.tested_status) || 0,
+                    status: row.status || 'active',
+                    notes: row.notes || ''
+                };
+                return Object.values(ordered).map(value => {
+                    if (typeof value === 'boolean') {
+                        return value ? 'TRUE' : 'FALSE';
+                    }
+                    // Enclose strings with commas or quotes in double quotes
+                    if (typeof value === 'string' && (value.includes(',') || value.includes('"'))) {
+                        return `"${value.replace(/"/g, '""')}"`; // Escape existing quotes
+                    }
+                    return value;
+                }).join(',');
+            });
+            return [headers, ...rows].join('\n');
+        }
+
+        // --- Table Rendering and Interactivity ---
+
+        function renderTable() {
+            tableBody.innerHTML = '';
+            const filterText = searchBox.value.toLowerCase();
+            let filteredData = vocabData.filter(row => {
+                if (!filterText) return true;
+                return Object.values(row).some(value => String(value).toLowerCase().includes(filterText));
+            });
+            if (filteredData.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="${vocabTable.querySelector('thead th').length}" style="text-align: center; padding: 20px; color: var(--text-color-secondary);">No matching words found or no CSV loaded.</td></tr>`;
+                selectAllCheckbox.checked = false;
+                return;
+            }
+            filteredData.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.dataset.wordId = row.word_id;
+                if (row.status === 'retired') tr.classList.add('retired');
+                // Selection checkbox cell
+                const selectTd = document.createElement('td');
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.className = 'row-select-checkbox';
+                selectTd.appendChild(checkbox);
+                tr.appendChild(selectTd);
+                // Word ID
+                const wordIdTd = document.createElement('td');
+                wordIdTd.textContent = row.word_id;
+                tr.appendChild(wordIdTd);
+                // Word
+                const wordTd = document.createElement('td');
+                wordTd.className = 'word';
+                wordTd.textContent = row.word;
+                tr.appendChild(wordTd);
+                // Translation
+                const translationTd = document.createElement('td');
+                translationTd.className = 'translation';
+                translationTd.textContent = row.translation || '';
+                translationTd.contentEditable = true;
+                translationTd.addEventListener('blur', e => {
+                    row.translation = e.target.textContent.trim();
+                });
+                tr.appendChild(translationTd);
+                // Seen
+                const seenTd = document.createElement('td');
+                const seenCheckbox = document.createElement('input');
+                seenCheckbox.type = 'checkbox';
+                seenCheckbox.checked = row.seen;
+                seenCheckbox.className = 'custom-checkbox';
+                seenCheckbox.addEventListener('change', e => {
+                    row.seen = e.target.checked;
+                });
+                seenTd.appendChild(seenCheckbox);
+                tr.appendChild(seenTd);
+                // Practiced Count with inline controls
+                const practicedTd = document.createElement('td');
+                practicedTd.className = 'practiced_count';
+                const pcWrap = document.createElement('div');
+                pcWrap.className = 'pc-wrap';
+                const countSpan = document.createElement('span');
+                countSpan.textContent = row.practiced_count;
+                countSpan.className = 'count-val';
+                const plusBtn = document.createElement('button');
+                plusBtn.textContent = '+';
+                plusBtn.className = 'practiced-control';
+                plusBtn.onclick = () => {
+                    row.practiced_count++;
+                    renderTable();
+                };
+                const minusBtn = document.createElement('button');
+                minusBtn.textContent = '-';
+                minusBtn.className = 'practiced-control';
+                minusBtn.onclick = () => {
+                    if (row.practiced_count > 0) row.practiced_count--;
+                    renderTable();
+                };
+                pcWrap.appendChild(countSpan);
+                pcWrap.appendChild(plusBtn);
+                pcWrap.appendChild(minusBtn);
+                practicedTd.appendChild(pcWrap);
+                tr.appendChild(practicedTd);
+                // Tested status (three states via single integer)
+                const testedTd = document.createElement('td');
+                testedTd.className = 'tested-status';
+                const testedSelect = document.createElement('select');
+                const mapIntToStr = {0:'untested',1:'passed',2:'failed'};
+                const mapStrToInt = {untested:0,passed:1,failed:2};
+                const current = mapIntToStr[row.tested_status ?? 0] || 'untested';
+                ['untested','passed','failed'].forEach(opt => {
+                    const option = document.createElement('option');
+                    option.value = opt;
+                    option.textContent = opt.charAt(0).toUpperCase() + opt.slice(1);
+                    if (opt === current) option.selected = true;
+                    testedSelect.appendChild(option);
+                });
+                // set initial color class
+                testedSelect.className = `t-status-${current}`;
+                testedSelect.onchange = e => {
+                    row.tested_status = mapStrToInt[e.target.value] ?? 0;
+                    testedSelect.className = `t-status-${e.target.value}`;
+                    renderTable();
+                };
+                testedTd.appendChild(testedSelect);
+                tr.appendChild(testedTd);
+                // Status (dropdown: active/retired)
+                const statusTd = document.createElement('td');
+                statusTd.className = 'status';
+                const statusSelect = document.createElement('select');
+                statusSelect.className = 'status-select';
+                const currentStatus = (row.status && row.status.trim()) || 'active';
+                ['active','retired'].forEach(opt => {
+                    const o = document.createElement('option');
+                    o.value = opt;
+                    o.textContent = opt.charAt(0).toUpperCase() + opt.slice(1);
+                    if (currentStatus === opt) o.selected = true;
+                    statusSelect.appendChild(o);
+                });
+                statusSelect.onchange = e => {
+                    row.status = e.target.value;
+                    renderTable();
+                };
+                statusTd.appendChild(statusSelect);
+                tr.appendChild(statusTd);
+                // Notes
+                const notesTd = document.createElement('td');
+                notesTd.textContent = row.notes;
+                notesTd.contentEditable = true;
+                notesTd.addEventListener('blur', e => {
+                    row.notes = e.target.textContent.trim();
+                    renderTable();
+                });
+                tr.appendChild(notesTd);
+                tableBody.appendChild(tr);
+            });
+            selectAllCheckbox.checked = false;
+        }
+
+        // --- Event Listeners ---
+
+        csvFile.addEventListener('change', async (event) => {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            try {
+                const text = await file.text();
+                vocabData = parseCSV(text);
+                renderTable();
+                showMessage(`CSV loaded successfully from ${file.name}! Found ${vocabData.length} words.`, 'success');
+                // De-select language buttons when a manual file is loaded
+                spanishBtn.classList.remove('selected');
+                mandarinBtn.classList.remove('selected');
+            } catch (error) {
+                console.error("Error loading CSV:", error);
+                showMessage(`Error loading CSV: ${error.message}. Please check file format.`, 'error');
+                vocabData = []; // Clear data if parsing fails
+                renderTable(); // Render empty table
+            }
+        });
+
+        searchBox.addEventListener('keyup', renderTable);
+
+        // Sort table when header is clicked
+        tableHeaderRow.addEventListener('click', (e) => {
+            const th = e.target.closest('th');
+            if (!th || !th.dataset.column || th.dataset.column === 'select') return;
+
+            const column = th.dataset.column;
+            
+            // Clear previous sort indicators
+            tableHeaderRow.querySelectorAll('th').forEach(header => {
+                header.classList.remove('sorted-asc', 'sorted-desc');
+            });
+
+            if (currentSortColumn === column) {
+                currentSortDirection = currentSortDirection === 'asc' ? 'desc' : 'asc';
+            } else {
+                currentSortColumn = column;
+                currentSortDirection = 'asc';
+            }
+
+            th.classList.add(`sorted-${currentSortDirection}`);
+            renderTable();
+        });
+
+        // Select All / Deselect All functionality (only affects visible rows)
+        selectAllCheckbox.addEventListener('change', (e) => {
+            // Only select/deselect visible checkboxes
+            document.querySelectorAll('#vocabTable tbody .row-select-checkbox').forEach(checkbox => {
+                checkbox.checked = e.target.checked;
+            });
+        });
+
+    // Batch actions removed in favor of per-row controls
+
+        exportCsvBtn.addEventListener('click', () => {
+            if (vocabData.length === 0) {
+                showMessage('No data to export. Please load a CSV first.', 'error');
+                return;
+            }
+            const csvContent = toCSV(vocabData);
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            const filename = `vocab_progress_${currentLanguage}_${new Date().toISOString().slice(0,10).replace(/-/g,'')}.csv`;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showMessage('CSV exported successfully!', 'success');
+        });
+
+        // Language Switchers
+        async function switchLanguage(lang) {
+            currentLanguage = lang;
+            spanishBtn.classList.remove('selected');
+            mandarinBtn.classList.remove('selected');
+            document.getElementById(`${lang}Btn`).classList.add('selected');
+            csvFile.value = ''; // Clear file input as we're loading from known path
+            await loadVocabFromPath(csvPaths[lang]);
+        }
+
+        async function loadVocabFromPath(path) {
+            try {
+                const response = await fetch(path);
+                if (!response.ok) {
+                    // Specific message for auto-load failure
+                    throw new Error(`Could not load CSV from '${path}'. Please ensure the file exists in the correct folder or use the 'Upload CSV' button.`);
+                }
+                const text = await response.text();
+                vocabData = parseCSV(text);
+                renderTable();
+                showMessage(`Loaded ${currentLanguage.charAt(0).toUpperCase() + currentLanguage.slice(1)} vocab! Found ${vocabData.length} words.`, 'success');
+            } catch (error) {
+                console.error("Auto-load error:", error);
+                showMessage(`Auto-load failed: ${error.message}`, 'error');
+                vocabData = []; // Clear data if auto-load fails
+                renderTable();
+            }
+        }
+
+
+        // Initial load on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load Spanish by default
+            switchLanguage('spanish'); // This will also select the Spanish button
+            // Attach event listeners to language buttons
+            spanishBtn.addEventListener('click', () => switchLanguage('spanish'));
+            mandarinBtn.addEventListener('click', () => switchLanguage('mandarin'));
+        });
+
+    </script>
+</body>
+</html>

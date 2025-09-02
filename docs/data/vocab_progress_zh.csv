@@ -1,0 +1,151 @@
+word_id,word,translation,seen,practiced_count,tested,correct_count,status,notes
+ZH001,我 (wǒ),"I, me",FALSE,0,FALSE,0,active,Personal Pron.
+ZH002,我们 (wǒmen),"we, us (pl.)",FALSE,0,FALSE,0,active,Personal Pron.
+ZH003,你 (nǐ),you,FALSE,0,FALSE,0,active,Personal Pron.
+ZH004,他 (tā),"he, him",FALSE,0,FALSE,0,active,Personal Pron.
+ZH005,她 (tā),"she, her",FALSE,0,FALSE,0,active,Personal Pron.
+ZH006,这 (zhè),"this (here)",FALSE,0,FALSE,0,active,Demonstrative Pron.
+ZH007,那 (nà),"that (there)",FALSE,0,FALSE,0,active,Demonstrative Pron.
+ZH008,哪 (nǎ),which,FALSE,0,FALSE,0,active,Interrogative Pron.
+ZH009,哪儿 (nǎr),where,FALSE,0,FALSE,0,active,Interrogative Pron.
+ZH010,谁 (shéi),who,FALSE,0,FALSE,0,active,Interrogative Pron.
+ZH011,什么 (shénme),"what, why",FALSE,0,FALSE,0,active,Interrogative Pron.
+ZH012,多少 (duōshǎo),"how many, how much",FALSE,0,FALSE,0,active,Interrogative Pron.
+ZH013,几 (jǐ),"a few, how many",FALSE,0,FALSE,0,active,Interrogative Pron.
+ZH014,怎么 (zěnme),how,FALSE,0,FALSE,0,active,Interrogative Pron.
+ZH015,怎么样 (zěnmeyàng),"how about",FALSE,0,FALSE,0,active,Interrogative Pron.
+ZH016,一 (yī),one,FALSE,0,FALSE,0,active,Numeral
+ZH017,二 (èr),two,FALSE,0,FALSE,0,active,Numeral
+ZH018,三 (sān),three,FALSE,0,FALSE,0,active,Numeral
+ZH019,四 (sì),four,FALSE,0,FALSE,0,active,Numeral
+ZH020,五 (wǔ),five,FALSE,0,FALSE,0,active,Numeral
+ZH021,六 (liù),six,FALSE,0,FALSE,0,active,Numeral
+ZH022,七 (qī),seven,FALSE,0,FALSE,0,active,Numeral
+ZH023,八 (bā),eight,FALSE,0,FALSE,0,active,Numeral
+ZH024,九 (jiǔ),nine,FALSE,0,FALSE,0,active,Numeral
+ZH025,十 (shí),ten,FALSE,0,FALSE,0,active,Numeral
+ZH026,个 (gè),"(for normal objects)",FALSE,0,FALSE,0,active,Quantifier
+ZH027,岁 (suì),"(for age)",FALSE,0,FALSE,0,active,Quantifier
+ZH028,本 (běn),"(for books)",FALSE,0,FALSE,0,active,Quantifier
+ZH029,些 (xiē),some,FALSE,0,FALSE,0,active,Quantifier
+ZH030,块 (kuài),"piece, chunk",FALSE,0,FALSE,0,active,Quantifier
+ZH031,不 (bù),no,FALSE,0,FALSE,0,active,Adverb
+ZH032,没 (méi),no,FALSE,0,FALSE,0,active,Adverb
+ZH033,很 (hěn),"quite, very",FALSE,0,FALSE,0,active,Adverb
+ZH034,太 (tài),too,FALSE,0,FALSE,0,active,Adverb
+ZH035,都 (dōu),all,FALSE,0,FALSE,0,active,Adverb
+ZH036,一点儿 (yīdiǎnr),"a little bit",FALSE,0,FALSE,0,active,Adverb
+ZH037,和 (hé),and,FALSE,0,FALSE,0,active,Conjunction
+ZH038,在 (zài),"in, at",FALSE,0,FALSE,0,active,Preposition
+ZH039,的 (de),,FALSE,0,FALSE,0,active,Auxiliary
+ZH040,了 (le),,FALSE,0,FALSE,0,active,Auxiliary
+ZH041,吗 (ma),,FALSE,0,FALSE,0,active,Auxiliary
+ZH042,呢 (ne),,FALSE,0,FALSE,0,active,Auxiliary
+ZH043,喂 (wèi),hello,FALSE,0,FALSE,0,active,Interjection
+ZH044,家 (jiā),home,FALSE,0,FALSE,0,active,Noun
+ZH045,学校 (xuéxiào),school,FALSE,0,FALSE,0,active,Noun
+ZH046,饭店 (fàndiàn),restaurant,FALSE,0,FALSE,0,active,Noun
+ZH047,商店 (shāngdiàn),store,FALSE,0,FALSE,0,active,Noun
+ZH048,医院 (yīyuàn),hospital,FALSE,0,FALSE,0,active,Noun
+ZH049,中国 (Zhōngguó),China,FALSE,0,FALSE,0,active,Noun
+ZH050,北京 (Běijīng),Beijing,FALSE,0,FALSE,0,active,Noun
+ZH051,上 (shàng),up,FALSE,0,FALSE,0,active,Noun
+ZH052,下 (xià),down,FALSE,0,FALSE,0,active,Noun
+ZH053,前面 (qiánmiàn),front,FALSE,0,FALSE,0,active,Noun
+ZH054,后面 (hòumiàn),behind,FALSE,0,FALSE,0,active,Noun
+ZH055,里 (lǐmiàn),inside,FALSE,0,FALSE,0,active,Noun
+ZH056,今天 (jīntiān),today,FALSE,0,FALSE,0,active,Noun
+ZH057,明天 (míngtiān),tomorrow,FALSE,0,FALSE,0,active,Noun
+ZH058,昨天 (zuótiān),yesterday,FALSE,0,FALSE,0,active,Noun
+ZH059,上午 (shàngwǔ),morning,FALSE,0,FALSE,0,active,Noun
+ZH060,中午 (zhōngwǔ),noon,FALSE,0,FALSE,0,active,Noun
+ZH061,下午 (xiàwǔ),afternoon,FALSE,0,FALSE,0,active,Noun
+ZH062,年 (nián),year,FALSE,0,FALSE,0,active,Noun
+ZH063,月 (yuè),month,FALSE,0,FALSE,0,active,Noun
+ZH064,号 (hào),"number/date",FALSE,0,FALSE,0,active,Noun
+ZH065,星期 (xīngqī),week,FALSE,0,FALSE,0,active,Noun
+ZH066,点 (diǎn),o'clock,FALSE,0,FALSE,0,active,Noun
+ZH067,分钟 (fēnzhōng),minute,FALSE,0,FALSE,0,active,Noun
+ZH068,现在 (xiànzài),now,FALSE,0,FALSE,0,active,Noun
+ZH069,时候 (shíhou),time,FALSE,0,FALSE,0,active,Noun
+ZH070,爸爸 (bàba),father,FALSE,0,FALSE,0,active,Noun
+ZH071,妈妈 (māma),mother,FALSE,0,FALSE,0,active,Noun
+ZH072,儿子 (érzi),son,FALSE,0,FALSE,0,active,Noun
+ZH073,女儿 (nǚér),daughter,FALSE,0,FALSE,0,active,Noun
+ZH074,老师 (lǎoshī),teacher,FALSE,0,FALSE,0,active,Noun
+ZH075,学生 (xuéshēng),student,FALSE,0,FALSE,0,active,Noun
+ZH076,同学 (tóngxué),classmate,FALSE,0,FALSE,0,active,Noun
+ZH077,朋友 (péngyǒu),friend,FALSE,0,FALSE,0,active,Noun
+ZH078,医生 (yīshēng),doctor,FALSE,0,FALSE,0,active,Noun
+ZH079,先生 (xiānsheng),sir,FALSE,0,FALSE,0,active,Noun
+ZH080,小姐 (xiǎojiě),Miss,FALSE,0,FALSE,0,active,Noun
+ZH081,衣服 (yīfu),cloth,FALSE,0,FALSE,0,active,Noun
+ZH082,水 (shuǐ),water,FALSE,0,FALSE,0,active,Noun
+ZH083,菜 (cài),dish,FALSE,0,FALSE,0,active,Noun
+ZH084,米饭 (mǐfàn),rice,FALSE,0,FALSE,0,active,Noun
+ZH085,水果 (shuǐguǒ),fruit,FALSE,0,FALSE,0,active,Noun
+ZH086,苹果 (píngguǒ),apple,FALSE,0,FALSE,0,active,Noun
+ZH087,茶 (chá),tea,FALSE,0,FALSE,0,active,Noun
+ZH088,杯子 (bēizi),cup,FALSE,0,FALSE,0,active,Noun
+ZH089,钱 (qián),money,FALSE,0,FALSE,0,active,Noun
+ZH090,飞机 (fēijī),airplane,FALSE,0,FALSE,0,active,Noun
+ZH091,出租车 (chūzūchē),taxi,FALSE,0,FALSE,0,active,Noun
+ZH092,电视 (diànshì),television,FALSE,0,FALSE,0,active,Noun
+ZH093,电脑 (diànnǎo),computer,FALSE,0,FALSE,0,active,Noun
+ZH094,电影 (diànyǐng),movie,FALSE,0,FALSE,0,active,Noun
+ZH095,天气 (tiānqì),weather,FALSE,0,FALSE,0,active,Noun
+ZH096,猫 (māo),cat,FALSE,0,FALSE,0,active,Noun
+ZH097,狗 (gǒu),dog,FALSE,0,FALSE,0,active,Noun
+ZH098,东西 (dōngxi),thing,FALSE,0,FALSE,0,active,Noun
+ZH099,人 (rén),person,FALSE,0,FALSE,0,active,Noun
+ZH100,名字 (míngzi),name,FALSE,0,FALSE,0,active,Noun
+ZH101,书 (shū),book,FALSE,0,FALSE,0,active,Noun
+ZH102,汉语 (hànyǔ),Mandarin Chinese,FALSE,0,FALSE,0,active,Noun
+ZH103,字 (zì),character,FALSE,0,FALSE,0,active,Noun
+ZH104,桌子 (zhuōzi),desk,FALSE,0,FALSE,0,active,Noun
+ZH105,椅子 (yǐzi),chair,FALSE,0,FALSE,0,active,Noun
+ZH106,谢谢 (xièxie),thank,FALSE,0,FALSE,0,active,Verb
+ZH107,不客气 (búkèqì),"you are welcome",FALSE,0,FALSE,0,active,Verb
+ZH108,再见 (zàijiàn),good-bye,FALSE,0,FALSE,0,active,Verb
+ZH109,请 (qǐng),please,FALSE,0,FALSE,0,active,Verb
+ZH110,对不起 (duìbùqǐ),sorry,FALSE,0,FALSE,0,active,Verb
+ZH111,没关系 (méiguānxì),"It doesn't matter",FALSE,0,FALSE,0,active,Verb
+ZH112,是 (shì),"be (am, is, are)",FALSE,0,FALSE,0,active,Verb
+ZH113,有 (yǒu),have,FALSE,0,FALSE,0,active,Verb
+ZH114,看 (kàn),look,FALSE,0,FALSE,0,active,Verb
+ZH115,听 (tīng),listen,FALSE,0,FALSE,0,active,Verb
+ZH116,说 (shuō),speak,FALSE,0,FALSE,0,active,Verb
+ZH117,读 (dú),read,FALSE,0,FALSE,0,active,Verb
+ZH118,写 (xiě),write,FALSE,0,FALSE,0,active,Verb
+ZH119,看见 (kànjiàn),see,FALSE,0,FALSE,0,active,Verb
+ZH120,叫 (jiào),call,FALSE,0,FALSE,0,active,Verb
+ZH121,来 (lái),come,FALSE,0,FALSE,0,active,Verb
+ZH122,回 (huí),return,FALSE,0,FALSE,0,active,Verb
+ZH123,去 (qù),go,FALSE,0,FALSE,0,active,Verb
+ZH124,吃 (chī),eat,FALSE,0,FALSE,0,active,Verb
+ZH125,喝 (hē),drink,FALSE,0,FALSE,0,active,Verb
+ZH126,睡觉 (shuìjiào),sleep,FALSE,0,FALSE,0,active,Verb
+ZH127,打电话 (dǎdiànhuà),"make phone call",FALSE,0,FALSE,0,active,Verb
+ZH128,做 (zuò),do,FALSE,0,FALSE,0,active,Verb
+ZH129,买 (mǎi),buy,FALSE,0,FALSE,0,active,Verb
+ZH130,开 (kāi),open,FALSE,0,FALSE,0,active,Verb
+ZH131,坐 (zuò),sit,FALSE,0,FALSE,0,active,Verb
+ZH132,住 (zhù),live,FALSE,0,FALSE,0,active,Verb
+ZH133,学习 (xuéxí),study,FALSE,0,FALSE,0,active,Verb
+ZH134,工作 (gōngzuò),work,FALSE,0,FALSE,0,active,Verb
+ZH135,下雨 (xiàyǔ),rain,FALSE,0,FALSE,0,active,Verb
+ZH136,爱 (ài),love,FALSE,0,FALSE,0,active,Verb
+ZH137,喜欢 (xǐhuān),"love, like",FALSE,0,FALSE,0,active,Verb
+ZH138,想 (xiǎng),want,FALSE,0,FALSE,0,active,Verb
+ZH139,认识 (rènshi),know,FALSE,0,FALSE,0,active,Verb
+ZH140,会 (huì),can,FALSE,0,FALSE,0,active,Verb
+ZH141,能 (néng),"can, be able to",FALSE,0,FALSE,0,active,Adjective
+ZH142,好 (hǎo),good,FALSE,0,FALSE,0,active,Adjective
+ZH143,大 (dà),big,FALSE,0,FALSE,0,active,Adjective
+ZH144,小 (xiǎo),small,FALSE,0,FALSE,0,active,Adjective
+ZH145,多 (duō),"many, much",FALSE,0,FALSE,0,active,Adjective
+ZH146,少 (shǎo),"few, little",FALSE,0,FALSE,0,active,Adjective
+ZH147,冷 (lěng),cold,FALSE,0,FALSE,0,active,Adjective
+ZH148,热 (rè),hot,FALSE,0,FALSE,0,active,Adjective
+ZH149,高兴 (gāoxìng),happy,FALSE,0,FALSE,0,active,Adjective
+ZH150,漂亮 (piàoliang),beautiful,FALSE,0,FALSE,0,active,Adjective

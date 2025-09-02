@@ -1,0 +1,151 @@
+word_id,word,translation,seen,practiced_count,tested,correct_count,status,notes
+ES001,yo,I,FALSE,0,FALSE,0,active,Personal Pronouns
+ES002,tú,"you (informal singular)",FALSE,0,FALSE,0,active,Personal Pronouns
+ES003,usted,"you (formal singular)",FALSE,0,FALSE,0,active,Personal Pronouns
+ES004,él,he,FALSE,0,FALSE,0,active,Personal Pronouns
+ES005,ella,she,FALSE,0,FALSE,0,active,Personal Pronouns
+ES006,nosotros/nosotras,"we (m/f)",FALSE,0,FALSE,0,active,Personal Pronouns
+ES007,ellos/ellas,"they (m/f)",FALSE,0,FALSE,0,active,Personal Pronouns
+ES008,hola,hello,FALSE,0,FALSE,0,active,Common Greetings & Polite Words
+ES009,adiós,goodbye,FALSE,0,FALSE,0,active,Common Greetings & Polite Words
+ES010,por favor,please,FALSE,0,FALSE,0,active,Common Greetings & Polite Words
+ES011,gracias,thank you,FALSE,0,FALSE,0,active,Common Greetings & Polite Words
+ES012,de nada,"you're welcome",FALSE,0,FALSE,0,active,Common Greetings & Polite Words
+ES013,sí,yes,FALSE,0,FALSE,0,active,Common Greetings & Polite Words
+ES014,no,no,FALSE,0,FALSE,0,active,Common Greetings & Polite Words
+ES015,¿cómo?,how?,FALSE,0,FALSE,0,active,Common Greetings & Polite Words
+ES016,¿qué?,what?,FALSE,0,FALSE,0,active,Common Greetings & Polite Words
+ES017,ser,"to be (permanent)",FALSE,0,FALSE,0,active,Basic Verbs
+ES018,estar,"to be (temporary/location)",FALSE,0,FALSE,0,active,Basic Verbs
+ES019,tener,to have,FALSE,0,FALSE,0,active,Basic Verbs
+ES020,ir,to go,FALSE,0,FALSE,0,active,Basic Verbs
+ES021,hablar,to speak,FALSE,0,FALSE,0,active,Basic Verbs
+ES022,uno,one,FALSE,0,FALSE,0,active,Numbers (1-100)
+ES023,dos,two,FALSE,0,FALSE,0,active,Numbers (1-100)
+ES024,tres,three,FALSE,0,FALSE,0,active,Numbers (1-100)
+ES025,cuatro,four,FALSE,0,FALSE,0,active,Numbers (1-100)
+ES026,cinco,five,FALSE,0,FALSE,0,active,Numbers (1-100)
+ES027,seis,six,FALSE,0,FALSE,0,active,Numbers (1-100)
+ES028,siete,seven,FALSE,0,FALSE,0,active,Numbers (1-100)
+ES029,ocho,eight,FALSE,0,FALSE,0,active,Numbers (1-100)
+ES030,nueve,nine,FALSE,0,FALSE,0,active,Numbers (1-100)
+ES031,diez,ten,FALSE,0,FALSE,0,active,Numbers (1-100)
+ES032,once,eleven,FALSE,0,FALSE,0,active,Numbers (1-100)
+ES033,doce,twelve,FALSE,0,FALSE,0,active,Numbers (1-100)
+ES034,trece,thirteen,FALSE,0,FALSE,0,active,Numbers (1-100)
+ES035,catorce,fourteen,FALSE,0,FALSE,0,active,Numbers (1-100)
+ES036,quince,fifteen,FALSE,0,FALSE,0,active,Numbers (1-100)
+ES037,veinte,twenty,FALSE,0,FALSE,0,active,Numbers (1-100)
+ES038,treinta,thirty,FALSE,0,FALSE,0,active,Numbers (1-100)
+ES039,cuarenta,forty,FALSE,0,FALSE,0,active,Numbers (1-100)
+ES040,cincuenta,fifty,FALSE,0,FALSE,0,active,Numbers (1-100)
+ES041,cien,one hundred,FALSE,0,FALSE,0,active,Numbers (1-100)
+ES042,hombre,man,FALSE,0,FALSE,0,active,"Common Nouns (People & Places)"
+ES043,mujer,woman,FALSE,0,FALSE,0,active,"Common Nouns (People & Places)"
+ES044,niño/niña,"boy/girl",FALSE,0,FALSE,0,active,"Common Nouns (People & Places)"
+ES045,amigo/amiga,"friend (m/f)",FALSE,0,FALSE,0,active,"Common Nouns (People & Places)"
+ES046,casa,house/home,FALSE,0,FALSE,0,active,"Common Nouns (People & Places)"
+ES047,ciudad,city,FALSE,0,FALSE,0,active,"Common Nouns (People & Places)"
+ES048,país,country,FALSE,0,FALSE,0,active,"Common Nouns (People & Places)"
+ES049,libro,book,FALSE,0,FALSE,0,active,"Common Nouns (Objects & Concepts)"
+ES050,agua,"water",FALSE,0,FALSE,0,active,"Common Nouns (Objects & Concepts)"
+ES051,comida,food,FALSE,0,FALSE,0,active,"Common Nouns (Objects & Concepts)"
+ES052,día,day,FALSE,0,FALSE,0,active,"Common Nouns (Objects & Concepts)"
+ES053,noche,night,FALSE,0,FALSE,0,active,"Common Nouns (Objects & Concepts)"
+ES054,hora,hour/time,FALSE,0,FALSE,0,active,"Common Nouns (Objects & Concepts)"
+ES055,comer,to eat,FALSE,0,FALSE,0,active,More Basic Verbs
+ES056,beber,to drink,FALSE,0,FALSE,0,active,More Basic Verbs
+ES057,vivir,to live,FALSE,0,FALSE,0,active,More Basic Verbs
+ES058,querer,"to want/to love",FALSE,0,FALSE,0,active,More Basic Verbs
+ES059,ver,to see,FALSE,0,FALSE,0,active,More Basic Verbs
+ES060,hacer,"to do/to make",FALSE,0,FALSE,0,active,More Basic Verbs
+ES061,lunes,Monday,FALSE,0,FALSE,0,active,"Days of the Week & Months"
+ES062,martes,Tuesday,FALSE,0,FALSE,0,active,"Days of the Week & Months"
+ES063,miércoles,Wednesday,FALSE,0,FALSE,0,active,"Days of the Week & Months"
+ES064,jueves,Thursday,FALSE,0,FALSE,0,active,"Days of the Week & Months"
+ES065,viernes,Friday,FALSE,0,FALSE,0,active,"Days of the Week & Months"
+ES066,sábado,Saturday,FALSE,0,FALSE,0,active,"Days of the Week & Months"
+ES067,domingo,Sunday,FALSE,0,FALSE,0,active,"Days of the Week & Months"
+ES068,enero,January,FALSE,0,FALSE,0,active,"Days of the Week & Months"
+ES069,febrero,February,FALSE,0,FALSE,0,active,"Days of the Week & Months"
+ES070,marzo,March,FALSE,0,FALSE,0,active,"Days of the Week & Months"
+ES071,rojo/a,red,FALSE,0,FALSE,0,active,Colors
+ES072,azul,blue,FALSE,0,FALSE,0,active,Colors
+ES073,verde,green,FALSE,0,FALSE,0,active,Colors
+ES074,amarillo/a,yellow,FALSE,0,FALSE,0,active,Colors
+ES075,blanco/a,white,FALSE,0,FALSE,0,active,Colors
+ES076,padre,father,FALSE,0,FALSE,0,active,"Family Members (extended)"
+ES077,madre,mother,FALSE,0,FALSE,0,active,"Family Members (extended)"
+ES078,hermano/hermana,"brother/sister",FALSE,0,FALSE,0,active,"Family Members (extended)"
+ES079,hijo/hija,"son/daughter",FALSE,0,FALSE,0,active,"Family Members (extended)"
+ES080,abuelo/abuela,"grandfather/grandmother",FALSE,0,FALSE,0,active,"Family Members (extended)"
+ES081,estudiante,student,FALSE,0,FALSE,0,active,"Common Nouns (Professions & Daily Life)"
+ES082,profesor/a,"teacher/professor",FALSE,0,FALSE,0,active,"Common Nouns (Professions & Daily Life)"
+ES083,doctor/a,doctor,FALSE,0,FALSE,0,active,"Common Nouns (Professions & Daily Life)"
+ES084,trabajo,"work/job",FALSE,0,FALSE,0,active,"Common Nouns (Professions & Daily Life)"
+ES085,dinero,money,FALSE,0,FALSE,0,active,"Common Nouns (Professions & Daily Life)"
+ES086,coche,car,FALSE,0,FALSE,0,active,"Common Nouns (Professions & Daily Life)"
+ES087,autobús,bus,FALSE,0,FALSE,0,active,"Common Nouns (Professions & Daily Life)"
+ES088,tren,train,FALSE,0,FALSE,0,active,"Common Nouns (Professions & Daily Life)"
+ES089,estación,station,FALSE,0,FALSE,0,active,"Common Nouns (Professions & Daily Life)"
+ES090,aeropuerto,airport,FALSE,0,FALSE,0,active,"Common Nouns (Professions & Daily Life)"
+ES091,estudiar,to study,FALSE,0,FALSE,0,active,"More Basic Verbs & Adjectives"
+ES092,trabajar,to work,FALSE,0,FALSE,0,active,"More Basic Verbs & Adjectives"
+ES093,querer,"to love/want",FALSE,0,FALSE,0,active,"More Basic Verbs & Adjectives"
+ES094,poder,"to be able to/can",FALSE,0,FALSE,0,active,"More Basic Verbs & Adjectives"
+ES095,saber,"to know (facts/how to)",FALSE,0,FALSE,0,active,"More Basic Verbs & Adjectives"
+ES096,grande,"big/large",FALSE,0,FALSE,0,active,"More Basic Verbs & Adjectives"
+ES097,pequeño/a,small,FALSE,0,FALSE,0,active,"More Basic Verbs & Adjectives"
+ES098,nuevo/a,new,FALSE,0,FALSE,0,active,"More Basic Verbs & Adjectives"
+ES099,en,"in, on, at",FALSE,0,FALSE,0,active,Prepositions
+ES100,con,with,FALSE,0,FALSE,0,active,Prepositions
+ES101,bueno/a,good,FALSE,0,FALSE,0,active,Common Adjectives
+ES102,malo/a,bad,FALSE,0,FALSE,0,active,Common Adjectives
+ES103,feliz,happy,FALSE,0,FALSE,0,active,Common Adjectives
+ES104,triste,sad,FALSE,0,FALSE,0,active,Common Adjectives
+ES105,fácil,easy,FALSE,0,FALSE,0,active,Common Adjectives
+ES106,difícil,difficult,FALSE,0,FALSE,0,active,Common Adjectives
+ES107,importante,important,FALSE,0,FALSE,0,active,Common Adjectives
+ES108,mesa,table,FALSE,0,FALSE,0,active,"More Common Nouns (Daily Items & Places)"
+ES109,silla,chair,FALSE,0,FALSE,0,active,"More Common Nouns (Daily Items & Places)"
+ES110,cama,bed,FALSE,0,FALSE,0,active,"More Common Nouns (Daily Items & Places)"
+ES111,puerta,door,FALSE,0,FALSE,0,active,"More Common Nouns (Daily Items & Places)"
+ES112,ventana,window,FALSE,0,FALSE,0,active,"More Common Nouns (Daily Items & Places)"
+ES113,teléfono,telephone,FALSE,0,FALSE,0,active,"More Common Nouns (Daily Items & Places)"
+ES114,ordenador / computadora,computer,FALSE,0,FALSE,0,active,"More Common Nouns (Daily Items & Places)"
+ES115,escuela / colegio,school,FALSE,0,FALSE,0,active,"More Common Nouns (Daily Items & Places)"
+ES116,universidad,university,FALSE,0,FALSE,0,active,"More Common Nouns (Daily Items & Places)"
+ES117,hospital,hospital,FALSE,0,FALSE,0,active,"More Common Nouns (Daily Items & Places)"
+ES118,banco,bank,FALSE,0,FALSE,0,active,"More Common Nouns (Daily Items & Places)"
+ES119,tienda,"store/shop",FALSE,0,FALSE,0,active,"More Common Nouns (Daily Items & Places)"
+ES120,mercado,market,FALSE,0,FALSE,0,active,"More Common Nouns (Daily Items & Places)"
+ES121,calle,street,FALSE,0,FALSE,0,active,"More Common Nouns (Daily Items & Places)"
+ES122,parque,park,FALSE,0,FALSE,0,active,"More Common Nouns (Daily Items & Places)"
+ES123,mañana,"morning / tomorrow",FALSE,0,FALSE,0,active,"Times of Day & Time expressions"
+ES124,tarde,"afternoon / evening",FALSE,0,FALSE,0,active,"Times of Day & Time expressions"
+ES125,mediodía,noon,FALSE,0,FALSE,0,active,"Times of Day & Time expressions"
+ES126,medianoche,midnight,FALSE,0,FALSE,0,active,"Times of Day & Time expressions"
+ES127,ahora,now,FALSE,0,FALSE,0,active,"Times of Day & Time expressions"
+ES128,siempre,always,FALSE,0,FALSE,0,active,"Times of Day & Time expressions"
+ES129,nunca,never,FALSE,0,FALSE,0,active,"Times of Day & Time expressions"
+ES130,a veces,sometimes,FALSE,0,FALSE,0,active,"Times of Day & Time expressions"
+ES131,desayunar,"to have breakfast",FALSE,0,FALSE,0,active,"More Essential Verbs (Daily Routine, Perception)"
+ES132,almorzar,"to have lunch",FALSE,0,FALSE,0,active,"More Essential Verbs (Daily Routine, Perception)"
+ES133,cenar,"to have dinner",FALSE,0,FALSE,0,active,"More Essential Verbs (Daily Routine, Perception)"
+ES134,dormir,"to sleep",FALSE,0,FALSE,0,active,"More Essential Verbs (Daily Routine, Perception)"
+ES135,levantarse,"to get up",FALSE,0,FALSE,0,active,"More Essential Verbs (Daily Routine, Perception)"
+ES136,ducharse,"to shower",FALSE,0,FALSE,0,active,"More Essential Verbs (Daily Routine, Perception)"
+ES137,vestirse,"to get dressed",FALSE,0,FALSE,0,active,"More Essential Verbs (Daily Routine, Perception)"
+ES138,oír,"to hear",FALSE,0,FALSE,0,active,"More Essential Verbs (Daily Routine, Perception)"
+ES139,escuchar,"to listen (to)",FALSE,0,FALSE,0,active,"More Essential Verbs (Daily Routine, Perception)"
+ES140,leer,"to read",FALSE,0,FALSE,0,active,"More Essential Verbs (Daily Routine, Perception)"
+ES141,escribir,"to write",FALSE,0,FALSE,0,active,"More Essential Verbs (Daily Routine, Perception)"
+ES142,vivir,"to live",FALSE,0,FALSE,0,active,"More Essential Verbs (Daily Routine, Perception)"
+ES143,muy,very,FALSE,0,FALSE,0,active,"Basic Adverbs & Conjunctions"
+ES144,bien,well,FALSE,0,FALSE,0,active,"Basic Adverbs & Conjunctions"
+ES145,mal,badly,FALSE,0,FALSE,0,active,"Basic Adverbs & Conjunctions"
+ES146,y,and,FALSE,0,FALSE,0,active,"Basic Adverbs & Conjunctions"
+ES147,o,or,FALSE,0,FALSE,0,active,"Basic Adverbs & Conjunctions"
+ES148,pero,but,FALSE,0,FALSE,0,active,"Basic Adverbs & Conjunctions"
+ES149,porque,because,FALSE,0,FALSE,0,active,"Basic Adverbs & Conjunctions"
+ES150,¿cuándo?,when?,FALSE,0,FALSE,0,active,"Basic Adverbs & Conjunctions"
